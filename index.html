@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GameTech BR — Loja Gamer & Homebrew</title>
+<title>Explosão do Game — Loja Gamer & Homebrew</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -20,7 +20,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -32,39 +31,28 @@
     overflow-x: hidden;
   }
 
-  /* scanline overlay */
   body::before {
     content: '';
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.08) 2px,
-      rgba(0,0,0,0.08) 4px
-    );
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
     pointer-events: none;
     z-index: 9999;
   }
 
-  /* grid bg */
   body::after {
     content: '';
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background-image:
-      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
     background-size: 50px 50px;
     pointer-events: none;
     z-index: 0;
   }
 
-  /* ─── NAV ─── */
+  /* NAV */
   nav {
-    position: sticky; top: 0;
-    z-index: 1000;
+    position: sticky; top: 0; z-index: 1000;
     background: rgba(5,5,8,0.95);
     border-bottom: 1px solid var(--border-glow);
     padding: 0 2rem;
@@ -74,598 +62,296 @@
 
   .nav-logo {
     font-family: 'Orbitron', monospace;
-    font-size: 1.1rem;
-    font-weight: 900;
+    font-size: 1rem; font-weight: 900;
     color: var(--neon-cyan);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-decoration: none;
     text-shadow: 0 0 12px var(--neon-cyan);
   }
-
   .nav-logo span { color: var(--neon-purple); text-shadow: 0 0 12px var(--neon-purple); }
 
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    letter-spacing: 0.12em;
-    transition: color 0.2s;
-    text-transform: uppercase;
+    font-size: 0.78rem; color: var(--text-muted);
+    text-decoration: none; letter-spacing: 0.12em;
+    transition: color 0.2s; text-transform: uppercase;
   }
   .nav-links a:hover { color: var(--neon-cyan); }
 
-  .nav-cart {
-    background: transparent;
-    border: 1px solid var(--border-glow);
-    color: var(--neon-cyan);
-    padding: 0.4rem 1rem;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.75rem;
-    cursor: pointer;
-    letter-spacing: 0.1em;
-    transition: background 0.2s, box-shadow 0.2s;
+  .nav-social { display: flex; gap: 0.8rem; align-items: center; }
+  .nav-social a {
+    color: var(--text-muted); font-size: 1.1rem;
+    text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center;
   }
-  .nav-cart:hover {
-    background: rgba(0,245,255,0.08);
-    box-shadow: 0 0 16px rgba(0,245,255,0.2);
-  }
+  .nav-social a:hover { color: var(--neon-cyan); }
 
-  /* ─── HERO ─── */
+  /* HERO */
   .hero {
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     min-height: 92vh;
     display: flex; align-items: center;
-    padding: 0 6%;
-    overflow: hidden;
+    padding: 0 6%; overflow: hidden;
   }
 
   .hero-bg-shape {
-    position: absolute;
-    right: -100px; top: 50%;
+    position: absolute; right: -100px; top: 50%;
     transform: translateY(-50%);
     width: 680px; height: 680px;
     border: 1px solid rgba(180,0,255,0.15);
-    border-radius: 50%;
-    pointer-events: none;
+    border-radius: 50%; pointer-events: none;
   }
   .hero-bg-shape::before {
-    content: '';
-    position: absolute;
-    inset: 60px;
-    border: 1px solid rgba(0,245,255,0.12);
-    border-radius: 50%;
+    content: ''; position: absolute; inset: 60px;
+    border: 1px solid rgba(0,245,255,0.12); border-radius: 50%;
   }
   .hero-bg-shape::after {
-    content: '';
-    position: absolute;
-    inset: 120px;
-    border: 1px solid rgba(180,0,255,0.1);
-    border-radius: 50%;
+    content: ''; position: absolute; inset: 120px;
+    border: 1px solid rgba(180,0,255,0.1); border-radius: 50%;
   }
 
   .hero-tag {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--neon-green);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 1.2rem;
+    font-size: 0.72rem; color: var(--neon-green);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.2rem;
   }
 
   .hero h1 {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(2.4rem, 5vw, 4.2rem);
-    font-weight: 900;
-    line-height: 1.05;
-    color: #fff;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.4rem;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1.05;
+    color: #fff; letter-spacing: -0.01em; margin-bottom: 1.4rem;
   }
 
   .hero h1 .accent-cyan { color: var(--neon-cyan); text-shadow: 0 0 30px rgba(0,245,255,0.5); }
   .hero h1 .accent-purple { color: var(--neon-purple); text-shadow: 0 0 30px rgba(180,0,255,0.5); }
 
   .hero p {
-    font-size: 1.15rem;
-    color: var(--text-muted);
-    max-width: 500px;
-    margin-bottom: 2.5rem;
-    line-height: 1.7;
+    font-size: 1.15rem; color: var(--text-muted);
+    max-width: 500px; margin-bottom: 2.5rem; line-height: 1.7;
   }
 
   .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
 
   .btn-primary {
-    background: var(--neon-cyan);
-    color: #000;
-    border: none;
+    background: var(--neon-cyan); color: #000; border: none;
     padding: 0.8rem 2rem;
-    font-family: 'Orbitron', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
+    font-family: 'Orbitron', monospace; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
     transition: opacity 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    display: inline-flex; align-items: center;
+    text-decoration: none; display: inline-flex; align-items: center;
   }
   .btn-primary:hover { box-shadow: 0 0 24px rgba(0,245,255,0.5); opacity: 0.9; }
 
   .btn-ghost {
-    background: transparent;
-    color: var(--neon-purple);
+    background: transparent; color: var(--neon-purple);
     border: 1px solid var(--neon-purple);
     padding: 0.8rem 2rem;
-    font-family: 'Orbitron', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
+    font-family: 'Orbitron', monospace; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
     transition: background 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    display: inline-flex; align-items: center;
+    text-decoration: none; display: inline-flex; align-items: center;
   }
-  .btn-ghost:hover {
-    background: rgba(180,0,255,0.1);
-    box-shadow: 0 0 24px rgba(180,0,255,0.35);
-  }
+  .btn-ghost:hover { background: rgba(180,0,255,0.1); box-shadow: 0 0 24px rgba(180,0,255,0.35); }
 
-  .hero-stats {
-    display: flex; gap: 3rem; margin-top: 3.5rem;
-  }
-  .stat-item { text-align: left; }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 3.5rem; }
   .stat-num {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--neon-cyan);
+    font-family: 'Orbitron', monospace; font-size: 1.8rem; font-weight: 700; color: var(--neon-cyan);
   }
   .stat-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-top: 2px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+    color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 2px;
   }
 
-  /* ─── SECTIONS ─── */
   section { position: relative; z-index: 1; }
 
-  .section-header {
-    text-align: center;
-    margin-bottom: 3rem;
-    padding: 0 1rem;
-  }
-
+  .section-header { text-align: center; margin-bottom: 3rem; padding: 0 1rem; }
   .section-tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--neon-purple);
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 0.7rem;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+    color: var(--neon-purple); letter-spacing: 0.25em; text-transform: uppercase;
+    display: block; margin-bottom: 0.7rem;
   }
-
   .section-header h2 {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -0.01em;
+    font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; color: #fff;
   }
-
   .section-line {
-    width: 60px; height: 1px;
-    background: var(--neon-cyan);
-    margin: 1rem auto 0;
-    box-shadow: 0 0 8px var(--neon-cyan);
+    width: 60px; height: 1px; background: var(--neon-cyan);
+    margin: 1rem auto 0; box-shadow: 0 0 8px var(--neon-cyan);
   }
 
-  /* ─── CATEGORIES ─── */
+  /* CATEGORIES */
   .categories { padding: 5rem 6%; }
-
-  .cat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-  }
-
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
   .cat-card {
-    background: var(--bg-card);
-    border: 1px solid rgba(0,245,255,0.12);
-    padding: 1.8rem 1.2rem;
-    text-align: center;
-    cursor: pointer;
+    background: var(--bg-card); border: 1px solid rgba(0,245,255,0.12);
+    padding: 1.8rem 1.2rem; text-align: center; cursor: pointer;
     transition: border-color 0.25s, background 0.25s;
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-    text-decoration: none;
-    display: block;
+    text-decoration: none; display: block;
   }
-  .cat-card:hover {
-    border-color: var(--neon-cyan);
-    background: rgba(0,245,255,0.04);
-  }
-
-  .cat-icon {
-    font-size: 2rem;
-    margin-bottom: 0.8rem;
-    display: block;
-    color: var(--neon-cyan);
-  }
-
+  .cat-card:hover { border-color: var(--neon-cyan); background: rgba(0,245,255,0.04); }
+  .cat-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
   .cat-card h3 {
-    font-family: 'Orbitron', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.3rem;
-    text-transform: uppercase;
+    font-family: 'Orbitron', monospace; font-size: 0.72rem; font-weight: 700;
+    color: #fff; letter-spacing: 0.08em; margin-bottom: 0.3rem; text-transform: uppercase;
   }
+  .cat-card p { font-size: 0.78rem; color: var(--text-muted); }
 
-  .cat-card p {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-  }
-
-  /* ─── PRODUCTS ─── */
+  /* PRODUCTS */
   .products { padding: 4rem 6%; background: rgba(0,0,0,0.3); }
-
-  .products-filter {
-    display: flex; gap: 0.6rem; justify-content: center;
-    flex-wrap: wrap; margin-bottom: 2.5rem;
-  }
-
+  .products-filter { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
   .filter-btn {
-    background: transparent;
-    border: 1px solid rgba(0,245,255,0.2);
-    color: var(--text-muted);
-    padding: 0.4rem 1.2rem;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
+    background: transparent; border: 1px solid rgba(0,245,255,0.2);
+    color: var(--text-muted); padding: 0.4rem 1.2rem;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
   }
-  .filter-btn:hover, .filter-btn.active {
-    border-color: var(--neon-cyan);
-    color: var(--neon-cyan);
-    background: rgba(0,245,255,0.06);
-  }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0,245,255,0.06); }
 
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1.2rem;
-  }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; }
 
   .prod-card {
-    background: var(--bg-card);
-    border: 1px solid rgba(0,245,255,0.1);
-    overflow: hidden;
-    transition: border-color 0.25s, transform 0.2s;
+    background: var(--bg-card); border: 1px solid rgba(0,245,255,0.1);
+    overflow: hidden; transition: border-color 0.25s, transform 0.2s;
     clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
   }
-  .prod-card:hover {
-    border-color: rgba(0,245,255,0.5);
-    transform: translateY(-4px);
-  }
+  .prod-card:hover { border-color: rgba(0,245,255,0.5); transform: translateY(-4px); }
 
   .prod-img {
-    width: 100%; aspect-ratio: 4/3;
-    background: var(--bg-card2);
+    width: 100%; aspect-ratio: 4/3; background: var(--bg-card2);
     display: flex; align-items: center; justify-content: center;
-    font-size: 3.5rem;
-    border-bottom: 1px solid rgba(0,245,255,0.08);
-    position: relative;
-    overflow: hidden;
+    font-size: 3rem; border-bottom: 1px solid rgba(0,245,255,0.08);
+    position: relative; overflow: hidden;
   }
-
   .prod-img::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--neon-cyan);
-    opacity: 0;
-    transition: opacity 0.3s;
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--neon-cyan); opacity: 0; transition: opacity 0.3s;
   }
   .prod-card:hover .prod-img::after { opacity: 1; }
 
   .prod-badge {
     position: absolute; top: 10px; left: 10px;
-    background: var(--neon-purple);
-    color: #fff;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    padding: 3px 8px;
-    text-transform: uppercase;
+    color: #fff; font-family: 'Share Tech Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.1em; padding: 3px 8px; text-transform: uppercase;
   }
-
-  .prod-badge.hot { background: #ff3d00; }
-  .prod-badge.new { background: var(--neon-green); color: #000; }
+  .badge-hot { background: #ff3d00; }
+  .badge-new { background: var(--neon-green); color: #000; }
+  .badge-sale { background: #ff8800; color: #000; }
+  .badge-ps5 { background: #003791; }
 
   .prod-info { padding: 1rem 1.1rem 1.2rem; }
-
   .prod-cat {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.62rem;
-    color: var(--neon-cyan);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 0.35rem;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+    color: var(--neon-cyan); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem;
   }
-
-  .prod-info h3 {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    color: #fff;
-    margin-bottom: 0.4rem;
-    line-height: 1.3;
-  }
-
-  .prod-stars {
-    color: #f0c040;
-    font-size: 0.75rem;
-    margin-bottom: 0.7rem;
-    letter-spacing: 0.05em;
-  }
-
+  .prod-info h3 { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 0.95rem; color: #fff; margin-bottom: 0.4rem; line-height: 1.3; }
+  .prod-stars { color: #f0c040; font-size: 0.75rem; margin-bottom: 0.7rem; }
   .prod-footer { display: flex; align-items: center; justify-content: space-between; }
-
-  .prod-price {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--neon-cyan);
-  }
-  .prod-price-old {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    text-decoration: line-through;
-    margin-right: 6px;
-  }
-
+  .prod-price { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; color: var(--neon-cyan); }
+  .prod-price-old { font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; color: var(--text-muted); text-decoration: line-through; margin-right: 4px; }
   .prod-btn {
-    background: transparent;
-    border: 1px solid var(--neon-cyan);
-    color: var(--neon-cyan);
-    padding: 0.35rem 0.85rem;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
+    background: transparent; border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
+    padding: 0.35rem 0.85rem; font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
   }
-  .prod-btn:hover {
-    background: var(--neon-cyan);
-    color: #000;
-  }
+  .prod-btn:hover { background: var(--neon-cyan); color: #000; }
 
-  /* ─── HOMEBREW BANNER ─── */
+  /* HOMEBREW BANNER */
   .homebrew-banner {
     margin: 3rem 6%;
-    background: var(--bg-card);
-    border: 1px solid rgba(180,0,255,0.3);
+    background: var(--bg-card); border: 1px solid rgba(180,0,255,0.3);
     padding: 3rem 3.5rem;
     display: flex; align-items: center; justify-content: space-between;
     gap: 2rem; flex-wrap: wrap;
     clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
     position: relative; overflow: hidden;
   }
-
   .homebrew-banner::before {
-    content: '// HOMEBREW';
-    position: absolute;
-    top: 12px; right: 140px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: rgba(180,0,255,0.25);
-    letter-spacing: 0.15em;
+    content: '// HOMEBREW'; position: absolute; top: 12px; right: 140px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+    color: rgba(180,0,255,0.25); letter-spacing: 0.15em;
   }
-
-  .hb-content h2 {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.6rem;
-  }
+  .hb-content h2 { font-family: 'Orbitron', monospace; font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
   .hb-content h2 span { color: var(--neon-purple); }
-
-  .hb-content p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    max-width: 480px;
-  }
-
+  .hb-content p { color: var(--text-muted); font-size: 0.95rem; max-width: 480px; }
   .hb-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
   .hb-tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.62rem;
-    padding: 3px 10px;
-    border: 1px solid rgba(180,0,255,0.35);
-    color: rgba(180,0,255,0.8);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+    padding: 3px 10px; border: 1px solid rgba(180,0,255,0.35);
+    color: rgba(180,0,255,0.8); letter-spacing: 0.1em; text-transform: uppercase;
   }
 
-  /* ─── FEATURES ─── */
+  /* FEATURES */
   .features { padding: 5rem 6%; }
-
-  .feat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-
-  .feat-item {
-    border-left: 2px solid var(--neon-cyan);
-    padding: 0 0 0 1.4rem;
-  }
-
+  .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .feat-item { border-left: 2px solid var(--neon-cyan); padding: 0 0 0 1.4rem; }
   .feat-item h4 {
-    font-family: 'Orbitron', monospace;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-family: 'Orbitron', monospace; font-size: 0.8rem; font-weight: 700;
+    color: #fff; margin-bottom: 0.5rem; letter-spacing: 0.06em; text-transform: uppercase;
   }
+  .feat-item p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
 
-  .feat-item p {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  /* ─── NEWSLETTER ─── */
-  .newsletter {
-    padding: 5rem 6%;
-    background: rgba(0,0,0,0.4);
-    text-align: center;
-  }
-
-  .newsletter h2 {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.8rem;
-  }
+  /* NEWSLETTER */
+  .newsletter { padding: 5rem 6%; background: rgba(0,0,0,0.4); text-align: center; }
+  .newsletter h2 { font-family: 'Orbitron', monospace; font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 0.8rem; }
   .newsletter p { color: var(--text-muted); margin-bottom: 2rem; }
-
-  .nl-form {
-    display: flex; gap: 0;
-    max-width: 440px; margin: 0 auto;
-    border: 1px solid var(--border-glow);
-  }
-
+  .nl-form { display: flex; max-width: 440px; margin: 0 auto; border: 1px solid var(--border-glow); }
   .nl-form input {
-    flex: 1;
-    background: var(--bg-card);
-    border: none;
-    outline: none;
-    color: var(--text-main);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.8rem;
-    padding: 0.75rem 1rem;
-    letter-spacing: 0.05em;
+    flex: 1; background: var(--bg-card); border: none; outline: none;
+    color: var(--text-main); font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem; padding: 0.75rem 1rem; letter-spacing: 0.05em;
   }
   .nl-form input::placeholder { color: var(--text-muted); }
-
   .nl-form button {
-    background: var(--neon-cyan);
-    border: none;
-    color: #000;
-    font-family: 'Orbitron', monospace;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.75rem 1.4rem;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    white-space: nowrap;
+    background: var(--neon-cyan); border: none; color: #000;
+    font-family: 'Orbitron', monospace; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1.4rem;
+    cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
   }
   .nl-form button:hover { opacity: 0.85; }
 
-  /* ─── FOOTER ─── */
-  footer {
-    border-top: 1px solid rgba(0,245,255,0.1);
-    padding: 3rem 6% 2rem;
-    position: relative; z-index: 1;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 3rem;
-    margin-bottom: 2.5rem;
-  }
-
+  /* FOOTER */
+  footer { border-top: 1px solid rgba(0,245,255,0.1); padding: 3rem 6% 2rem; position: relative; z-index: 1; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 2.5rem; }
   .footer-brand .logo {
-    font-family: 'Orbitron', monospace;
-    font-size: 1rem;
-    font-weight: 900;
-    color: var(--neon-cyan);
-    text-shadow: 0 0 10px var(--neon-cyan);
-    margin-bottom: 0.8rem;
-    display: block;
+    font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 900;
+    color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan);
+    margin-bottom: 0.8rem; display: block;
   }
   .footer-brand .logo span { color: var(--neon-purple); text-shadow: 0 0 10px var(--neon-purple); }
-
   .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
 
-  .footer-col h5 {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--neon-cyan);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
+  .footer-social { display: flex; gap: 1rem; margin-top: 1.2rem; }
+  .footer-social a {
+    color: var(--text-muted); font-size: 1.2rem; text-decoration: none;
+    transition: color 0.2s; display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border: 1px solid rgba(0,245,255,0.15);
   }
+  .footer-social a:hover { color: var(--neon-cyan); border-color: var(--neon-cyan); }
 
+  .footer-col h5 {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+    color: var(--neon-cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
+  }
   .footer-col ul { list-style: none; }
   .footer-col ul li { margin-bottom: 0.5rem; }
-  .footer-col ul a {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
+  .footer-col ul a { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
   .footer-col ul a:hover { color: var(--text-main); }
 
   .footer-bottom {
-    border-top: 1px solid rgba(0,245,255,0.07);
+    border-top: 0.5px solid rgba(0,245,255,0.07);
     padding-top: 1.5rem;
     display: flex; align-items: center; justify-content: space-between;
   }
+  .footer-bottom p { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; }
+  .dot-live { width: 6px; height: 6px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 6px var(--neon-green); animation: blink 1.5s infinite; }
 
-  .footer-bottom p {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-  }
-
-  .footer-bottom .sys-status {
-    display: flex; align-items: center; gap: 0.4rem;
-  }
-
-  .dot-live {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--neon-green);
-    box-shadow: 0 0 6px var(--neon-green);
-    animation: blink 1.5s infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
   .hero > * { animation: fadeInUp 0.7s ease both; }
   .hero .hero-tag { animation-delay: 0.05s; }
@@ -674,43 +360,51 @@
   .hero-btns { animation-delay: 0.35s; }
   .hero-stats { animation-delay: 0.45s; }
 
-  /* ─── RESPONSIVE ─── */
   @media (max-width: 768px) {
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .hero-stats { gap: 1.5rem; }
     nav .nav-links { display: none; }
     .homebrew-banner { padding: 2rem 1.5rem; }
   }
-
   @media (max-width: 480px) {
     .footer-grid { grid-template-columns: 1fr; }
-    .hero { padding: 0 1.2rem; padding-top: 2rem; min-height: auto; padding-bottom: 3rem; }
+    .hero { padding: 2rem 1.2rem 3rem; min-height: auto; }
   }
 </style>
 </head>
 <body>
 
-<!-- ─── NAV ─── -->
+<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">GAME<span>TECH</span>.BR</a>
+  <a href="#" class="nav-logo">EXPLOSÃO <span>DO GAME</span></a>
   <ul class="nav-links">
     <li><a href="#loja">Loja</a></li>
     <li><a href="#homebrew">Homebrew</a></li>
-    <li><a href="#canal">Canal</a></li>
+    <li><a href="#armazenamento">Armazenamento</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
-  <button class="nav-cart">[ 0 ] Carrinho</button>
+  <div class="nav-social">
+    <a href="https://www.youtube.com/@Explosaodogame" target="_blank" title="YouTube">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C17.5 2.7 12 2.7 12 2.7s-5.5 0-8.3.2c-.4.1-1.4.1-2.3 1-.7.7-.9 2.3-.9 2.3S.3 8 .3 9.8v1.7c0 1.8.2 3.6.2 3.6s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.5.2 7.5.2s5.5 0 8.3-.2c.4-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.8.2-3.6V9.8c0-1.8-.2-3.6-.2-3.6zM9.7 15.1V8.4l6.3 3.4-6.3 3.3z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/vinas_explosaodogame/" target="_blank" title="Instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.3 2.2 12c0-3.2 0-3.6.1-4.8C2.4 3.9 4 2.3 7.2 2.3c1.2-.1 1.6-.1 4.8-.1zm0-2.2C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12c0 3.3 0 3.7.1 4.9.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24c3.3 0 3.7 0 4.9-.1 4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9 0-3.3 0-3.7-.1-4.9C23.7 2.7 21.3.3 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
+    </a>
+    <a href="https://x.com/GameExplosao" target="_blank" title="X / Twitter">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+    </a>
+  </div>
 </nav>
 
-<!-- ─── HERO ─── -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-shape"></div>
   <div style="position:relative;z-index:2;max-width:640px;">
-    <p class="hero-tag">// Sistema inicializado. Bem-vindo ao nexo gamer.</p>
-    <h1>Hardware.<br><span class="accent-cyan">Homebrew.</span><br><span class="accent-purple">High level.</span></h1>
-    <p>Acessórios e eletrônicos para quem vai além do mainstream. Do setup pro ao modchip, temos o que o verdadeiro gamer precisa.</p>
+    <p class="hero-tag">// Canal de games, homebrew e tecnologia</p>
+    <h1>Explosão<br><span class="accent-cyan">do Game.</span><br><span class="accent-purple">Loja oficial.</span></h1>
+    <p>HDs externos, SSDs, NVMe para PS5 e acessórios gamer. Tudo que você precisa para expandir seu setup e armazenamento.</p>
     <div class="hero-btns">
-      <a href="#loja" class="btn-primary">Ver produtos</a>
+      <a href="#armazenamento" class="btn-primary">Ver produtos</a>
       <a href="#homebrew" class="btn-ghost">Zona Homebrew</a>
     </div>
     <div class="hero-stats">
@@ -730,166 +424,220 @@
   </div>
 </section>
 
-<!-- ─── CATEGORIES ─── -->
+<!-- CATEGORIES -->
 <section class="categories" id="loja">
   <div class="section-header">
     <span class="section-tag">// Navegue por categoria</span>
     <h2>O que você está buscando?</h2>
     <div class="section-line"></div>
   </div>
-
   <div class="cat-grid">
-    <a href="#" class="cat-card">
+    <a href="#armazenamento" class="cat-card">
+      <span class="cat-icon">💾</span>
+      <h3>HDs Externos</h3>
+      <p>1TB a 4TB</p>
+    </a>
+    <a href="#armazenamento" class="cat-card">
+      <span class="cat-icon">⚡</span>
+      <h3>SSDs</h3>
+      <p>SATA & NVMe</p>
+    </a>
+    <a href="#armazenamento" class="cat-card">
       <span class="cat-icon">🎮</span>
+      <h3>NVMe PS5</h3>
+      <p>Expansão oficial</p>
+    </a>
+    <a href="#" class="cat-card">
+      <span class="cat-icon">🕹️</span>
       <h3>Controles</h3>
       <p>Pro & retro</p>
     </a>
-    <a href="#" class="cat-card">
-      <span class="cat-icon">💾</span>
+    <a href="#homebrew" class="cat-card">
+      <span class="cat-icon">🔧</span>
       <h3>Flashcarts</h3>
-      <p>DS, GBA, N64</p>
+      <p>GBA, DS, N64</p>
     </a>
     <a href="#" class="cat-card">
       <span class="cat-icon">🖥️</span>
       <h3>Captura</h3>
       <p>HDMI & upscaler</p>
     </a>
-    <a href="#" class="cat-card">
-      <span class="cat-icon">🔧</span>
-      <h3>Modding</h3>
-      <p>Chips & peças</p>
-    </a>
-    <a href="#" class="cat-card">
-      <span class="cat-icon">🔊</span>
-      <h3>Áudio</h3>
-      <p>Headsets gamer</p>
-    </a>
-    <a href="#" class="cat-card">
-      <span class="cat-icon">⚡</span>
-      <h3>Cabos & Hubs</h3>
-      <p>Setup completo</p>
-    </a>
   </div>
 </section>
 
-<!-- ─── PRODUCTS ─── -->
-<section class="products" id="produtos">
+<!-- ARMAZENAMENTO -->
+<section class="products" id="armazenamento">
   <div class="section-header">
-    <span class="section-tag">// Produtos em destaque</span>
-    <h2>Loja</h2>
+    <span class="section-tag">// Armazenamento</span>
+    <h2>HDs Externos & SSDs</h2>
     <div class="section-line"></div>
   </div>
 
   <div class="products-filter">
     <button class="filter-btn active">Todos</button>
-    <button class="filter-btn">Controles</button>
-    <button class="filter-btn">Flashcarts</button>
-    <button class="filter-btn">Modding</button>
-    <button class="filter-btn">Captura</button>
+    <button class="filter-btn">HDs Externos</button>
+    <button class="filter-btn">SSDs SATA</button>
+    <button class="filter-btn">NVMe</button>
+    <button class="filter-btn">NVMe PS5</button>
   </div>
 
   <div class="products-grid">
 
+    <!-- HDs EXTERNOS -->
     <div class="prod-card">
-      <div class="prod-img">
-        🎮
-        <span class="prod-badge hot">Hot</span>
-      </div>
+      <div class="prod-img">💾<span class="prod-badge badge-hot">Hot</span></div>
       <div class="prod-info">
-        <p class="prod-cat">Controles</p>
-        <h3>8BitDo Pro 2 Wireless</h3>
+        <p class="prod-cat">HD Externo</p>
+        <h3>Seagate Expansion 1TB USB 3.0</h3>
         <div class="prod-stars">★★★★★</div>
         <div class="prod-footer">
-          <div>
-            <span class="prod-price-old">R$320</span>
-            <span class="prod-price">R$279</span>
-          </div>
+          <div><span class="prod-price-old">R$299</span><span class="prod-price">R$249</span></div>
           <button class="prod-btn">+ Carrinho</button>
         </div>
       </div>
     </div>
 
     <div class="prod-card">
-      <div class="prod-img">
-        💾
-        <span class="prod-badge new">Novo</span>
-      </div>
+      <div class="prod-img">💾<span class="prod-badge badge-new">Novo</span></div>
       <div class="prod-info">
-        <p class="prod-cat">Flashcart</p>
-        <h3>EZ-Flash Omega GBA</h3>
+        <p class="prod-cat">HD Externo</p>
+        <h3>WD Elements 2TB USB 3.0</h3>
         <div class="prod-stars">★★★★★</div>
         <div class="prod-footer">
-          <div>
-            <span class="prod-price">R$189</span>
-          </div>
+          <div><span class="prod-price">R$419</span></div>
           <button class="prod-btn">+ Carrinho</button>
         </div>
       </div>
     </div>
 
     <div class="prod-card">
-      <div class="prod-img">🖥️</div>
+      <div class="prod-img">💾</div>
       <div class="prod-info">
-        <p class="prod-cat">Captura</p>
-        <h3>Elgato HD60 S+ 4K</h3>
+        <p class="prod-cat">HD Externo</p>
+        <h3>Seagate Backup Plus 4TB USB 3.0</h3>
         <div class="prod-stars">★★★★☆</div>
         <div class="prod-footer">
-          <div>
-            <span class="prod-price-old">R$1.150</span>
-            <span class="prod-price">R$990</span>
-          </div>
+          <div><span class="prod-price-old">R$749</span><span class="prod-price">R$689</span></div>
           <button class="prod-btn">+ Carrinho</button>
         </div>
       </div>
     </div>
 
     <div class="prod-card">
-      <div class="prod-img">
-        🔧
-        <span class="prod-badge" style="background:#ff8800;color:#000">Oferta</span>
-      </div>
+      <div class="prod-img">💾<span class="prod-badge badge-sale">Oferta</span></div>
       <div class="prod-info">
-        <p class="prod-cat">Modding</p>
-        <h3>Kit Modchip PS2 + Instalação</h3>
-        <div class="prod-stars">★★★★★</div>
-        <div class="prod-footer">
-          <div>
-            <span class="prod-price-old">R$380</span>
-            <span class="prod-price">R$299</span>
-          </div>
-          <button class="prod-btn">+ Carrinho</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="prod-card">
-      <div class="prod-img">🔊</div>
-      <div class="prod-info">
-        <p class="prod-cat">Áudio</p>
-        <h3>Hyperx Cloud III Wireless</h3>
-        <div class="prod-stars">★★★★★</div>
-        <div class="prod-footer">
-          <div>
-            <span class="prod-price">R$749</span>
-          </div>
-          <button class="prod-btn">+ Carrinho</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="prod-card">
-      <div class="prod-img">
-        ⚡
-        <span class="prod-badge new">Novo</span>
-      </div>
-      <div class="prod-info">
-        <p class="prod-cat">Cabos & Hubs</p>
-        <h3>Hub USB-C 10 em 1 HDMI 4K</h3>
+        <p class="prod-cat">HD Externo</p>
+        <h3>Toshiba Canvio Basics 3TB USB 3.0</h3>
         <div class="prod-stars">★★★★☆</div>
         <div class="prod-footer">
-          <div>
-            <span class="prod-price">R$219</span>
-          </div>
+          <div><span class="prod-price-old">R$599</span><span class="prod-price">R$529</span></div>
+          <button class="prod-btn">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SSDs SATA -->
+    <div class="prod-card">
+      <div class="prod-img">⚡<span class="prod-badge badge-new">Novo</span></div>
+      <div class="prod-info">
+        <p class="prod-cat">SSD SATA</p>
+        <h3>Kingston A400 480GB SATA III</h3>
+        <div class="prod-stars">★★★★★</div>
+        <div class="prod-footer">
+          <div><span class="prod-price">R$199</span></div>
+          <button class="prod-btn">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-img">⚡</div>
+      <div class="prod-info">
+        <p class="prod-cat">SSD SATA</p>
+        <h3>Samsung 870 EVO 1TB SATA III</h3>
+        <div class="prod-stars">★★★★★</div>
+        <div class="prod-footer">
+          <div><span class="prod-price-old">R$549</span><span class="prod-price">R$489</span></div>
+          <button class="prod-btn">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-img">⚡<span class="prod-badge badge-hot">Hot</span></div>
+      <div class="prod-info">
+        <p class="prod-cat">SSD SATA</p>
+        <h3>Crucial BX500 2TB SATA III</h3>
+        <div class="prod-stars">★★★★★</div>
+        <div class="prod-footer">
+          <div><span class="prod-price-old">R$799</span><span class="prod-price">R$699</span></div>
+          <button class="prod-btn">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NVMe -->
+    <div class="prod-card">
+      <div class="prod-img">🚀<span class="prod-badge badge-new">Novo</span></div>
+      <div class="prod-info">
+        <p class="prod-cat">SSD NVMe</p>
+        <h3>Kingston NV2 1TB M.2 NVMe PCIe 4.0</h3>
+        <div class="prod-stars">★★★★★</div>
+        <div class="prod-footer">
+          <div><span class="prod-price">R$379</span></div>
+          <button class="prod-btn">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-img">🚀<span class="prod-badge badge-hot">Hot</span></div>
+      <div class="prod-info">
+        <p class="prod-cat">SSD NVMe</p>
+        <h3>WD Blue SN580 2TB NVMe PCIe 4.0</h3>
+        <div class="prod-stars">★★★★★</div>
+        <div class="prod-footer">
+          <div><span class="prod-price-old">R$849</span><span class="prod-price">R$749</span></div>
+          <button class="prod-btn">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NVMe PS5 -->
+    <div class="prod-card">
+      <div class="prod-img">🎮<span class="prod-badge badge-ps5">PS5</span></div>
+      <div class="prod-info">
+        <p class="prod-cat">NVMe PS5</p>
+        <h3>Samsung 980 Pro 1TB NVMe PCIe 4.0</h3>
+        <div class="prod-stars">★★★★★</div>
+        <div class="prod-footer">
+          <div><span class="prod-price-old">R$699</span><span class="prod-price">R$599</span></div>
+          <button class="prod-btn">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-img">🎮<span class="prod-badge badge-ps5">PS5</span></div>
+      <div class="prod-info">
+        <p class="prod-cat">NVMe PS5</p>
+        <h3>WD Black SN850X 2TB NVMe PCIe 4.0</h3>
+        <div class="prod-stars">★★★★★</div>
+        <div class="prod-footer">
+          <div><span class="prod-price-old">R$1.099</span><span class="prod-price">R$949</span></div>
+          <button class="prod-btn">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-img">🎮<span class="prod-badge badge-new">Novo</span></div>
+      <div class="prod-info">
+        <p class="prod-cat">NVMe PS5</p>
+        <h3>Seagate FireCuda 530 4TB NVMe PCIe 4.0</h3>
+        <div class="prod-stars">★★★★★</div>
+        <div class="prod-footer">
+          <div><span class="prod-price">R$1.899</span></div>
           <button class="prod-btn">+ Carrinho</button>
         </div>
       </div>
@@ -902,7 +650,7 @@
   </div>
 </section>
 
-<!-- ─── HOMEBREW BANNER ─── -->
+<!-- HOMEBREW BANNER -->
 <section id="homebrew" style="padding: 0 6%;">
   <div class="homebrew-banner">
     <div class="hb-content">
@@ -921,14 +669,13 @@
   </div>
 </section>
 
-<!-- ─── FEATURES ─── -->
+<!-- FEATURES -->
 <section class="features">
   <div class="section-header">
     <span class="section-tag">// Por que nos escolher</span>
-    <h2>Diferencial GameTech.BR</h2>
+    <h2>Diferencial Explosão do Game</h2>
     <div class="section-line"></div>
   </div>
-
   <div class="feat-grid">
     <div class="feat-item">
       <h4>Curadoria gamer</h4>
@@ -949,7 +696,7 @@
   </div>
 </section>
 
-<!-- ─── NEWSLETTER ─── -->
+<!-- NEWSLETTER -->
 <section class="newsletter" id="contato">
   <span class="section-tag">// Fique no loop</span>
   <h2>Newsletter Gamer</h2>
@@ -960,45 +707,56 @@
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <span class="logo">GAME<span>TECH</span>.BR</span>
-      <p>A loja definitiva para gamers que vão além. Homebrew, retrogaming e os melhores acessórios para o seu setup.</p>
+      <span class="logo">EXPLOSÃO <span>DO GAME</span></span>
+      <p>Canal de games, homebrew e tecnologia. A loja oficial para quem vai além do mainstream.</p>
+      <div class="footer-social">
+        <a href="https://www.youtube.com/@Explosaodogame" target="_blank" title="YouTube">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C17.5 2.7 12 2.7 12 2.7s-5.5 0-8.3.2c-.4.1-1.4.1-2.3 1-.7.7-.9 2.3-.9 2.3S.3 8 .3 9.8v1.7c0 1.8.2 3.6.2 3.6s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.5.2 7.5.2s5.5 0 8.3-.2c.4-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.8.2-3.6V9.8c0-1.8-.2-3.6-.2-3.6zM9.7 15.1V8.4l6.3 3.4-6.3 3.3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/vinas_explosaodogame/" target="_blank" title="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.3 2.2 12c0-3.2 0-3.6.1-4.8C2.4 3.9 4 2.3 7.2 2.3c1.2-.1 1.6-.1 4.8-.1zm0-2.2C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12c0 3.3 0 3.7.1 4.9.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24c3.3 0 3.7 0 4.9-.1 4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9 0-3.3 0-3.7-.1-4.9C23.7 2.7 21.3.3 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
+        </a>
+        <a href="https://x.com/GameExplosao" target="_blank" title="X / Twitter">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+        </a>
+      </div>
     </div>
     <div class="footer-col">
       <h5>Loja</h5>
       <ul>
-        <li><a href="#">Todos os produtos</a></li>
+        <li><a href="#">HDs Externos</a></li>
+        <li><a href="#">SSDs SATA</a></li>
+        <li><a href="#">NVMe</a></li>
+        <li><a href="#">NVMe PS5</a></li>
         <li><a href="#">Flashcarts</a></li>
-        <li><a href="#">Modding</a></li>
-        <li><a href="#">Controles</a></li>
-        <li><a href="#">Captura</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h5>Info</h5>
+      <h5>Canal</h5>
       <ul>
-        <li><a href="#">Sobre nós</a></li>
-        <li><a href="#">Canal YouTube</a></li>
-        <li><a href="#">Blog / Tutoriais</a></li>
-        <li><a href="#">Política de troca</a></li>
+        <li><a href="https://www.youtube.com/@Explosaodogame" target="_blank">YouTube</a></li>
+        <li><a href="https://www.instagram.com/vinas_explosaodogame/" target="_blank">Instagram</a></li>
+        <li><a href="https://x.com/GameExplosao" target="_blank">X / Twitter</a></li>
+        <li><a href="#">Tutoriais</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h5>Contato</h5>
+      <h5>Suporte</h5>
       <ul>
         <li><a href="#">WhatsApp</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Discord</a></li>
-        <li><a href="#">E-mail</a></li>
+        <li><a href="#">Sobre nós</a></li>
+        <li><a href="#">Política de troca</a></li>
+        <li><a href="#">Contato</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 GameTech.BR — Todos os direitos reservados</p>
-    <div class="sys-status">
+    <p>© 2026 Explosão do Game — Todos os direitos reservados</p>
+    <div style="display:flex;align-items:center;gap:0.4rem;">
       <div class="dot-live"></div>
       <span style="font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text-muted);letter-spacing:0.1em;">SISTEMA ONLINE</span>
     </div>
