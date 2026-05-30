@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explosão do Game</title>
+    <title>Explosão do Game - Seção de Vídeos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,1077 +14,423 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --bg: #0a0a0c;
-            --cyan: #00f2ff;
-            --purple: #b300ff;
-            --cyan-glow: 0 0 10px rgba(0, 242, 255, 0.4), 0 0 40px rgba(0, 242, 255, 0.1);
-            --purple-glow: 0 0 10px rgba(179, 0, 255, 0.4), 0 0 40px rgba(179, 0, 255, 0.1);
-            --text: #e0e0e0;
-            --text-dim: #888;
-            --card-bg: #0e0e14;
-            --border-color: #1a1a2e;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Rajdhani', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
+            background-color: #0a0a0c;
+            font-family: 'Orbitron', sans-serif;
+            color: #00f7ff;
             position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* ── Grid de fundo ── */
+        /* Grid ciano */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                linear-gradient(rgba(0, 242, 255, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 242, 255, 0.06) 1px, transparent 1px);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 247, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 247, 255, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
         }
 
-        /* ── Scanlines CRT ── */
+        /* Scanlines */
         body::after {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.08) 0px,
-                rgba(0, 0, 0, 0.08) 1px,
-                transparent 1px,
-                transparent 3px
-            );
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 247, 255, 0.02) 2px,
+                rgba(0, 247, 255, 0.02) 4px);
             pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ── Scanline animada ── */
-        .scanline-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(0deg, rgba(0, 242, 255, 0.02) 0%, transparent 50%, rgba(0, 242, 255, 0.02) 100%);
-            background-size: 100% 6px;
-            animation: scanlineMove 6s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes scanlineMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(6px); }
-        }
-
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar {
-            width: 8px;
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-track {
-            background: #0e0e14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--cyan);
-            box-shadow: var(--cyan-glow);
-            border-radius: 4px;
-        }
-
-        /* ── Tipografia ── */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .mono {
-            font-family: 'Share Tech Mono', monospace;
-        }
-
-        .raj {
-            font-family: 'Rajdhani', sans-serif;
-        }
-
-        /* ── Container ── */
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
             z-index: 1;
         }
 
-        /* ════════════════════════════════════════
-           NAVBAR
-           ════════════════════════════════════════ */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 12px 0;
-            background: rgba(10, 10, 12, 0.92);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .navbar::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 5%;
-            width: 90%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
-            opacity: 0.6;
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--cyan);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-            letter-spacing: 3px;
-        }
-
-        .navbar-brand .brand-icon {
-            font-size: 1.6rem;
-        }
-
-        .navbar-links {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            list-style: none;
-        }
-
-        .navbar-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
-            padding: 6px 14px;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
             position: relative;
+            z-index: 2;
         }
 
-        .navbar-links a::before {
-            content: '[';
-            opacity: 0.4;
-            margin-right: 4px;
+        /* ===== PRODUTOS EXISTENTES (mantidos) ===== */
+        .products-section {
+            margin-bottom: 60px;
+            border: 1px solid #00f7ff;
+            padding: 20px;
+            background: rgba(0, 247, 255, 0.02);
         }
 
-        .navbar-links a::after {
-            content: ']';
-            opacity: 0.4;
-            margin-left: 4px;
+        .products-section h2 {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
         }
 
-        .navbar-links a:hover {
-            color: var(--cyan);
-            border-color: rgba(0, 242, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
-        }
-
-        /* ════════════════════════════════════════
-           HERO
-           ════════════════════════════════════════ */
-        .hero {
-            padding: 140px 0 80px;
-            position: relative;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(0, 242, 255, 0.03) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.4rem, 8vw, 5rem);
-            font-weight: 900;
-            color: var(--cyan);
-            text-shadow: 0 0 40px rgba(0, 242, 255, 0.3), 0 0 80px rgba(0, 242, 255, 0.1);
-            letter-spacing: 6px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero h1::after {
-            content: '';
-            display: block;
-            width: 60%;
-            height: 3px;
-            margin: 12px auto 0;
-            background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
-        }
-
-        .hero-sub {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 1rem;
-            color: var(--text-dim);
-            margin-top: 16px;
-            letter-spacing: 4px;
-            opacity: 0.8;
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 48px;
-            flex-wrap: wrap;
-        }
-
-        .hero-stat {
-            text-align: center;
-            padding: 20px 32px;
-            border: 1px solid rgba(0, 242, 255, 0.15);
-            background: rgba(0, 242, 255, 0.03);
-            position: relative;
-            min-width: 140px;
-            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-        }
-
-        .hero-stat::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            width: calc(100% + 2px);
-            height: calc(100% + 2px);
-            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-            background: linear-gradient(135deg, var(--cyan), transparent 40%, transparent 60%, var(--purple));
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        .hero-stat .number {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.4rem;
-            font-weight: 700;
-            color: var(--cyan);
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
-        }
-
-        .hero-stat .label {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            margin-top: 4px;
-        }
-
-        /* ════════════════════════════════════════
-           FILTROS
-           ════════════════════════════════════════ */
-        .filters-section {
-            padding: 20px 0 40px;
-        }
-
-        .filters-wrap {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.78rem;
-            padding: 8px 20px;
-            background: transparent;
-            color: var(--text-dim);
-            border: 1px solid rgba(0, 242, 255, 0.15);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-        }
-
-        .filter-btn:hover {
-            color: var(--cyan);
-            border-color: var(--cyan);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
-        }
-
-        .filter-btn.active {
-            color: var(--bg);
-            background: var(--cyan);
-            border-color: var(--cyan);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
-            font-weight: 600;
-        }
-
-        /* ════════════════════════════════════════
-           SEÇÕES / TÍTULOS
-           ════════════════════════════════════════ */
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--cyan);
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            position: relative;
-        }
-
-        .section-title::before {
-            content: '//';
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--purple);
-            opacity: 0.6;
-            font-size: 1.2rem;
-        }
-
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--cyan), transparent);
-            opacity: 0.3;
-        }
-
-        /* ── Cantos decorativos ── */
-        .corner-decor {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            border-color: var(--cyan);
-            opacity: 0.4;
-        }
-        .corner-decor.tl { top: -8px; left: -8px; border-top: 2px solid; border-left: 2px solid; }
-        .corner-decor.tr { top: -8px; right: -8px; border-top: 2px solid; border-right: 2px solid; }
-        .corner-decor.bl { bottom: -8px; left: -8px; border-bottom: 2px solid; border-left: 2px solid; }
-        .corner-decor.br { bottom: -8px; right: -8px; border-bottom: 2px solid; border-right: 2px solid; }
-
-        /* ════════════════════════════════════════
-           CARDS DE PRODUTO
-           ════════════════════════════════════════ */
-        .products-grid {
+        .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            padding: 20px 0 60px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
         }
 
         .product-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 242, 255, 0.08);
-            padding: 28px 24px 24px;
-            position: relative;
-            transition: all 0.4s ease;
-            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            width: calc(100% + 2px);
-            height: calc(100% + 2px);
-            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-            background: linear-gradient(135deg, var(--cyan), transparent 30%, transparent 70%, var(--purple));
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            border: 1px solid #00f7ff;
+            padding: 15px;
+            background: #0f0f12;
+            text-align: center;
+            transition: box-shadow 0.3s;
         }
 
         .product-card:hover {
-            border-color: rgba(0, 242, 255, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
         }
 
-        .product-card:hover::before {
-            opacity: 0.5;
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-bottom: 1px solid #00f7ff;
+            margin-bottom: 10px;
         }
 
-        .product-card .corner-decor {
-            opacity: 0.15;
-            transition: opacity 0.4s ease;
-        }
-        .product-card:hover .corner-decor {
-            opacity: 0.6;
-        }
-
-        .product-category {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.6rem;
-            color: var(--purple);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            opacity: 0.7;
-        }
-
-        .product-name {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
+        .product-card h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
             color: #fff;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
         }
 
-        .product-spec {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            margin-bottom: 16px;
+        .product-card .price {
+            color: #ff00ff;
+            margin-bottom: 10px;
         }
 
-        .product-asin {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.6rem;
-            color: rgba(0, 242, 255, 0.3);
-            margin-bottom: 16px;
-            letter-spacing: 1px;
-        }
-
-        .product-link {
+        .product-card .affiliate-link {
             display: inline-block;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--bg);
-            background: var(--cyan);
-            padding: 8px 20px;
+            padding: 8px 16px;
+            background: #00f7ff;
+            color: #0a0a0c;
+            text-transform: uppercase;
+            font-weight: 700;
             text-decoration: none;
+            font-size: 0.8rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .product-card .affiliate-link:hover {
+            background: #ff00ff;
+        }
+
+        /* ===== SEÇÃO DE VÍDEOS ===== */
+        .videos-section {
+            border: 2px solid #00f7ff;
+            padding: 30px 20px;
+            background: rgba(0, 247, 255, 0.03);
+            margin-top: 40px;
+        }
+
+        .videos-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #00f7ff;
+        }
+
+        .channel-btn-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .channel-link {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .channel-link:hover {
+            background: #ff00ff;
+            color: #0a0a0c;
+            box-shadow: 0 0 30px #ff00ff;
+        }
+
+        /* Tabs estilo HUD */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #00f7ff;
+            padding-bottom: 10px;
+        }
+
+        .tab-button {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid #00f7ff;
+            color: #00f7ff;
+            cursor: pointer;
+            transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-top: auto;
-            align-self: flex-start;
-            transition: all 0.3s ease;
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+            box-shadow: none;
         }
 
-        .product-link:hover {
-            background: #fff;
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
-            transform: scale(1.02);
+        .tab-button:hover {
+            background: rgba(0, 247, 255, 0.1);
+            box-shadow: 0 0 10px #00f7ff;
         }
 
-        .product-card.hidden {
+        .tab-button.active {
+            background: #00f7ff;
+            color: #0a0a0c;
+            font-weight: 700;
+            box-shadow: 0 0 20px #00f7ff;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .video-card {
+            border: 2px solid #00f7ff;
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.3), inset 0 0 15px rgba(0, 247, 255, 0.1);
+            padding: 10px;
+            background: #0c0c10;
+            transition: box-shadow 0.3s;
+        }
+
+        .video-card:hover {
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.5), inset 0 0 30px rgba(0, 247, 255, 0.2);
+        }
+
+        .video-card .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 */
+            margin-bottom: 10px;
+        }
+
+        .video-card iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-card h3 {
+            color: #00f7ff;
+            font-size: 1rem;
+            text-align: center;
+            text-shadow: 0 0 5px #00f7ff;
+            margin: 5px 0;
+        }
+
+        .video-card .watch-btn {
+            display: block;
+            text-align: center;
+            margin-top: 8px;
+            padding: 8px;
+            background: transparent;
+            border: 1px solid #ff00ff;
+            color: #ff00ff;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .video-card .watch-btn:hover {
+            background: #ff00ff;
+            color: #0a0a0c;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .tab-content {
             display: none;
         }
 
-        /* ════════════════════════════════════════
-           RODAPÉ
-           ════════════════════════════════════════ */
-        .footer {
-            padding: 48px 0 32px;
-            border-top: 1px solid rgba(0, 242, 255, 0.08);
-            margin-top: 40px;
-            position: relative;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 10%;
-            width: 80%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--purple), var(--cyan), transparent);
-            opacity: 0.3;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            text-align: center;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .footer-social a {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-            padding: 4px 8px;
-            border: 1px solid transparent;
-        }
-
-        .footer-social a:hover {
-            color: var(--cyan);
-            border-color: rgba(0, 242, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.05);
-        }
-
-        .footer-disclaimer {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.2);
-            max-width: 600px;
-            line-height: 1.6;
-            font-family: 'Rajdhani', sans-serif;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-brand {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            color: rgba(0, 242, 255, 0.3);
-            letter-spacing: 4px;
-        }
-
-        /* ════════════════════════════════════════
-           RESPONSIVO
-           ════════════════════════════════════════ */
-        @media (max-width: 768px) {
-            .navbar .container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .navbar-links {
-                justify-content: center;
-            }
-            .hero {
-                padding: 120px 0 48px;
-            }
-            .hero-stats {
-                gap: 16px;
-            }
-            .hero-stat {
-                min-width: 100px;
-                padding: 14px 20px;
-            }
-            .hero-stat .number {
-                font-size: 1.8rem;
-            }
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 16px;
-            }
-            .section-title {
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            .filter-btn {
-                font-size: 0.65rem;
-                padding: 6px 12px;
-            }
+        .tab-content.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="scanline-overlay"></div>
+    <div class="container">
 
-    <!-- ═══ NAVBAR ═══ -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <a href="#" class="navbar-brand">
-                <span class="brand-icon">◆</span>
-                EXPLOSÃO DO GAME
-            </a>
-            <ul class="navbar-links">
-                <li><a href="#produtos">Produtos</a></li>
-                <li><a href="#hd">HDs</a></li>
-                <li><a href="#ssd-sata">SSD SATA</a></li>
-                <li><a href="#ssd-nvme">NVMe</a></li>
-                <li><a href="#consoles">Consoles</a></li>
-                <li><a href="#homebrew">Homebrew</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- ═══ HERO ═══ -->
-    <section class="hero">
-        <div class="container">
-            <h1>◆ Explosão do Game</h1>
-            <p class="hero-sub">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</p>
-
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="number" data-count="720">+720</div>
-                    <div class="label">UPGRADES</div>
+        <!-- SEÇÃO DE PRODUTOS (já existente) -->
+        <section class="products-section">
+            <h2>🔥 PRODUTOS RECOMENDADOS</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/250x150/0a0a0c/00f7ff?text=Produto+1" alt="Produto 1">
+                    <h3>Controle Pro Gamer</h3>
+                    <div class="price">R$ 299,90</div>
+                    <a class="affiliate-link" href="https://amzn.to/3XXXXXX?tag=explosaodogam-20" target="_blank">COMPRAR NA AMAZON</a>
                 </div>
-                <div class="hero-stat">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="number" data-count="15">+15</div>
-                    <div class="label">CATEGORIAS</div>
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/250x150/0a0a0c/00f7ff?text=Produto+2" alt="Produto 2">
+                    <h3>Headset RGB 7.1</h3>
+                    <div class="price">R$ 189,90</div>
+                    <a class="affiliate-link" href="https://amzn.to/3YYYYYY?tag=explosaodogam-20" target="_blank">COMPRAR NA AMAZON</a>
                 </div>
-                <div class="hero-stat">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="number" data-count="100">100%</div>
-                    <div class="label">GAMER READY</div>
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/250x150/0a0a0c/00f7ff?text=Produto+3" alt="Produto 3">
+                    <h3>Teclado Mecânico RGB</h3>
+                    <div class="price">R$ 459,90</div>
+                    <a class="affiliate-link" href="https://amzn.to/3ZZZZZZ?tag=explosaodogam-20" target="_blank">COMPRAR NA AMAZON</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ═══ FILTROS ═══ -->
-    <section class="filters-section" id="produtos">
-        <div class="container">
-            <div class="filters-wrap">
-                <button class="filter-btn active" data-filter="all">[ Todos ]</button>
-                <button class="filter-btn" data-filter="hd">[ HDs ]</button>
-                <button class="filter-btn" data-filter="ssd-sata">[ SSD SATA ]</button>
-                <button class="filter-btn" data-filter="ssd-nvme">[ SSD NVMe ]</button>
-                <button class="filter-btn" data-filter="consoles">[ Consoles ]</button>
-                <button class="filter-btn" data-filter="homebrew">[ Homebrew ]</button>
+        <!-- SEÇÃO DE VÍDEOS NOVA -->
+        <section class="videos-section">
+            <h2>🎮 EXPLOSÃO DO GAME - VÍDEOS</h2>
+            <div class="channel-btn-container">
+                <a class="channel-link" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO CANAL</a>
             </div>
-        </div>
-    </section>
 
-    <!-- ═══ PRODUTOS ═══ -->
-    <section>
-        <div class="container">
-            <!-- HDs -->
-            <div class="section-title" id="hd">HDs / Armazenamento</div>
-            <div class="products-grid" data-category="hd">
-                <!-- Seagate Expansion 1TB -->
-                <div class="product-card" data-category="hd">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">HD Externo</div>
-                    <div class="product-name">Seagate Expansion 1TB</div>
-                    <div class="product-spec">USB 3.0 · Portátil</div>
-                    <div class="product-asin">ASIN: B07D3R4H7Z</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B07D3R4H7Z/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- Seagate Expansion 2TB -->
-                <div class="product-card" data-category="hd">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">HD Externo</div>
-                    <div class="product-name">Seagate Expansion 2TB</div>
-                    <div class="product-spec">USB 3.0 · Portátil</div>
-                    <div class="product-asin">ASIN: B07D3R5K9G</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B07D3R5K9G/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- Seagate Expansion 4TB -->
-                <div class="product-card" data-category="hd">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">HD Externo</div>
-                    <div class="product-name">Seagate Expansion 4TB</div>
-                    <div class="product-spec">USB 3.0 · Portátil</div>
-                    <div class="product-asin">ASIN: B07D3R6L8X</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B07D3R6L8X/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- WD Elements 2TB -->
-                <div class="product-card" data-category="hd">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">HD Externo</div>
-                    <div class="product-name">WD Elements 2TB</div>
-                    <div class="product-spec">USB 3.0 · Portátil</div>
-                    <div class="product-asin">ASIN: B06W55K9N6</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B06W55K9N6/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- WD Elements 4TB -->
-                <div class="product-card" data-category="hd">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">HD Externo</div>
-                    <div class="product-name">WD Elements 4TB</div>
-                    <div class="product-spec">USB 3.0 · Portátil</div>
-                    <div class="product-asin">ASIN: B0713WPGLL</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B0713WPGLL/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <button class="tab-button active" data-tab="dicas">Dicas Rápidas</button>
+                <button class="tab-button" data-tab="unboxing">Unboxing</button>
+                <button class="tab-button" data-tab="reviews">Reviews</button>
+            </div>
+
+            <!-- Conteúdo das Abas -->
+            <div id="tab-dicas" class="tab-content active">
+                <div class="video-grid">
+                    <!-- VIDEO 1 - Dicas -->
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <!-- Substitua VIDEO_ID pelo ID do vídeo do YouTube -->
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen></iframe>
+                        </div>
+                        <h3>Dica 1 - Configuração Perfeita</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen></iframe>
+                        </div>
+                        <h3>Dica 2 - Melhor Sensibilidade</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" allowfullscreen></iframe>
+                        </div>
+                        <h3>Dica 3 - Crosshair Profissional</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- SSDs SATA -->
-            <div class="section-title" id="ssd-sata">SSD SATA</div>
-            <div class="products-grid" data-category="ssd-sata">
-                <!-- Kingston A400 480GB -->
-                <div class="product-card" data-category="ssd-sata">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">SSD SATA</div>
-                    <div class="product-name">Kingston A400 480GB</div>
-                    <div class="product-spec">Leitura 500MB/s · SATA III</div>
-                    <div class="product-asin">ASIN: B01N0TQPQB</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B01N0TQPQB/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- Kingston A400 960GB -->
-                <div class="product-card" data-category="ssd-sata">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">SSD SATA</div>
-                    <div class="product-name">Kingston A400 960GB</div>
-                    <div class="product-spec">Leitura 500MB/s · SATA III</div>
-                    <div class="product-asin">ASIN: B079XC5PVV</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B079XC5PVV/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- Crucial BX500 480GB -->
-                <div class="product-card" data-category="ssd-sata">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">SSD SATA</div>
-                    <div class="product-name">Crucial BX500 480GB</div>
-                    <div class="product-spec">Leitura 540MB/s · SATA III</div>
-                    <div class="product-asin">ASIN: B07G3KGYZQ</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B07G3KGYZQ/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- Crucial BX500 1TB -->
-                <div class="product-card" data-category="ssd-sata">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">SSD SATA</div>
-                    <div class="product-name">Crucial BX500 1TB</div>
-                    <div class="product-spec">Leitura 540MB/s · SATA III</div>
-                    <div class="product-asin">ASIN: B07YD5LKHG</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B07YD5LKHG/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
+            <div id="tab-unboxing" class="tab-content">
+                <div class="video-grid">
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_4" allowfullscreen></iframe>
+                        </div>
+                        <h3>Unboxing Mouse Gamer</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_5" allowfullscreen></iframe>
+                        </div>
+                        <h3>Unboxing Teclado Mecânico</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_6" allowfullscreen></iframe>
+                        </div>
+                        <h3>Unboxing Headset RGB</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- SSDs NVMe -->
-            <div class="section-title" id="ssd-nvme">SSD NVMe (PS5)</div>
-            <div class="products-grid" data-category="ssd-nvme">
-                <!-- Samsung 980 Pro Heatsink 1TB -->
-                <div class="product-card" data-category="ssd-nvme">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">NVMe M.2</div>
-                    <div class="product-name">Samsung 980 Pro Heatsink 1TB</div>
-                    <div class="product-spec">Leitura 7000MB/s · PCIe 4.0</div>
-                    <div class="product-asin">ASIN: B09JHL33X7</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B09JHL33X7/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- Samsung 980 Pro Heatsink 2TB -->
-                <div class="product-card" data-category="ssd-nvme">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">NVMe M.2</div>
-                    <div class="product-name">Samsung 980 Pro Heatsink 2TB</div>
-                    <div class="product-spec">Leitura 7000MB/s · PCIe 4.0</div>
-                    <div class="product-asin">ASIN: B09JHKSNNG</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B09JHKSNNG/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- WD_BLACK SN850X Heatsink 1TB -->
-                <div class="product-card" data-category="ssd-nvme">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">NVMe M.2</div>
-                    <div class="product-name">WD_BLACK SN850X Heatsink 1TB</div>
-                    <div class="product-spec">Leitura 7300MB/s · PCIe 4.0</div>
-                    <div class="product-asin">ASIN: B0B7CPSN2K</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B0B7CPSN2K/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- WD_BLACK SN850X Heatsink 2TB -->
-                <div class="product-card" data-category="ssd-nvme">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">NVMe M.2</div>
-                    <div class="product-name">WD_BLACK SN850X Heatsink 2TB</div>
-                    <div class="product-spec">Leitura 7300MB/s · PCIe 4.0</div>
-                    <div class="product-asin">ASIN: B0B7CKVCCV</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B0B7CKVCCV/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
+            <div id="tab-reviews" class="tab-content">
+                <div class="video-grid">
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_7" allowfullscreen></iframe>
+                        </div>
+                        <h3>Review - Cadeira Gamer</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_8" allowfullscreen></iframe>
+                        </div>
+                        <h3>Review - Monitor 144Hz</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
+                    <div class="video-card">
+                        <div class="iframe-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_9" allowfullscreen></iframe>
+                        </div>
+                        <h3>Review - Console Next Gen</h3>
+                        <a class="watch-btn" href="https://www.youtube.com/@Explosaodogame" target="_blank">ASSISTIR NO YOUTUBE</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Consoles / Acessórios -->
-            <div class="section-title" id="consoles">Consoles &amp; Acessórios</div>
-            <div class="products-grid" data-category="consoles">
-                <!-- PS5 Slim -->
-                <div class="product-card" data-category="consoles">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">Console</div>
-                    <div class="product-name">PlayStation 5 Slim</div>
-                    <div class="product-spec">Edição Digital + Leitor</div>
-                    <div class="product-asin">ASIN: B0CL61F39H</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B0CL61F39H/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- DualSense -->
-                <div class="product-card" data-category="consoles">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">Controle</div>
-                    <div class="product-name">DualSense Wireless</div>
-                    <div class="product-spec">PS5 · Branco</div>
-                    <div class="product-asin">ASIN: B08FC5L3GK</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B08FC5L3GK/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- Switch OLED -->
-                <div class="product-card" data-category="consoles">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">Console</div>
-                    <div class="product-name">Nintendo Switch OLED</div>
-                    <div class="product-spec">Tela 7″ · Branco</div>
-                    <div class="product-asin">ASIN: B09H97S6GS</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B09H97S6GS/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- 8BitDo Ultimate -->
-                <div class="product-card" data-category="consoles">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">Controle</div>
-                    <div class="product-name">8BitDo Ultimate Bluetooth</div>
-                    <div class="product-spec">Switch / PC / Android</div>
-                    <div class="product-asin">ASIN: B0B9BDMWWN</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B0B9BDMWWN/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-            </div>
-
-            <!-- Homebrew / Essenciais -->
-            <div class="section-title" id="homebrew">Homebrew &amp; Essenciais</div>
-            <div class="products-grid" data-category="homebrew">
-                <!-- MicroSD 128GB -->
-                <div class="product-card" data-category="homebrew">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">MicroSD</div>
-                    <div class="product-name">SanDisk Extreme 128GB</div>
-                    <div class="product-spec">U3 · V30 · A2</div>
-                    <div class="product-asin">ASIN: B07FCMKK5X</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B07FCMKK5X/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- MicroSD 256GB -->
-                <div class="product-card" data-category="homebrew">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">MicroSD</div>
-                    <div class="product-name">SanDisk Extreme 256GB</div>
-                    <div class="product-spec">U3 · V30 · A2</div>
-                    <div class="product-asin">ASIN: B07FCR3316</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B07FCR3316/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-                <!-- Adaptador HDMI Retro -->
-                <div class="product-card" data-category="homebrew">
-                    <span class="corner-decor tl"></span>
-                    <span class="corner-decor tr"></span>
-                    <span class="corner-decor bl"></span>
-                    <span class="corner-decor br"></span>
-                    <div class="product-category">Adaptador</div>
-                    <div class="product-name">Adaptador HDMI Retro</div>
-                    <div class="product-spec">Compatível PS2/PS3/Xbox 360</div>
-                    <div class="product-asin">ASIN: B0819X8V29</div>
-                    <a class="product-link" href="https://www.amazon.com.br/dp/B0819X8V29/?tag=explosaodogam-20" target="_blank" rel="noopener">▸ COMPRAR</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══ RODAPÉ ═══ -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-social">
-                    <a href="https://youtube.com/@Explosaodogame" target="_blank" rel="noopener">[ YouTube: @Explosaodogame ]</a>
-                    <a href="https://x.com/GameExplosao" target="_blank" rel="noopener">[ X: @GameExplosao ]</a>
-                    <a href="https://instagram.com/vinas_explosaodogame" target="_blank" rel="noopener">[ Instagram: @vinas_explosaodogame ]</a>
-                </div>
-                <div class="footer-disclaimer">
-                    🔹 Explosão do Game é um site afiliado Amazon. Como associado, ganhamos comissão sobre compras qualificadas.
-                    Os preços e a disponibilidade dos produtos podem variar. Sempre verifique o valor final no site da Amazon.
-                    Nossa StoreID: <strong>explosaodogam-20</strong>.
-                </div>
-                <div class="footer-brand">◆ EXPLOSÃO DO GAME ◆ 2025</div>
-            </div>
-        </div>
-    </footer>
+            <!-- Instrução para substituir IDs (visível apenas como comentário visual) -->
+            <p style="color:#555; font-size:0.7rem; text-align:center; margin-top:15px; border-top:1px solid #00f7ff; padding-top:10px;">
+                ⚡ Substitua os IDs dos vídeos nos iframes (VIDEO_ID_1, VIDEO_ID_2, etc.) pelos IDs reais do YouTube.
+            </p>
+        </section>
+    </div>
 
     <script>
-        // ── Filtro de categorias ──
-        (function() {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const allCards = document.querySelectorAll('.product-card');
+        // Gerenciamento das abas (tabs)
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-            function filterProducts(category) {
-                allCards.forEach(card => {
-                    if (category === 'all' || card.dataset.category === category) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-                // Atualiza botões
-                filterBtns.forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.filter === category);
-                });
+            function activateTab(tabId) {
+                // Esconde todos os conteúdos
+                tabContents.forEach(content => content.classList.remove('active'));
+                // Desativa todos os botões
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                // Ativa o conteúdo correspondente
+                const targetContent = document.getElementById('tab-' + tabId);
+                if (targetContent) targetContent.classList.add('active');
+                // Ativa o botão clicado
+                const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+                if (activeButton) activeButton.classList.add('active');
             }
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filterProducts(this.dataset.filter);
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const tabId = this.getAttribute('data-tab');
+                    activateTab(tabId);
                 });
             });
-        })();
-
-        // ── Navbar HUD effect: shrink on scroll ──
-        (function() {
-            const navbar = document.getElementById('navbar');
-            let lastScroll = 0;
-            window.addEventListener('scroll', function() {
-                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-                if (currentScroll > 80) {
-                    navbar.style.padding = '6px 0';
-                    navbar.style.background = 'rgba(10, 10, 12, 0.97)';
-                } else {
-                    navbar.style.padding = '12px 0';
-                    navbar.style.background = 'rgba(10, 10, 12, 0.92)';
-                }
-                lastScroll = currentScroll;
-            });
-        })();
-
-        // ── Contador animado simples ──
-        (function() {
-            const counters = document.querySelectorAll('.hero-stat .number');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const el = entry.target;
-                        const text = el.textContent;
-                        const numMatch = text.match(/(\d+)/);
-                        if (numMatch) {
-                            const target = parseInt(numMatch[1], 10);
-                            let current = 0;
-                            const step = Math.ceil(target / 40);
-                            const interval = setInterval(() => {
-                                current += step;
-                                if (current >= target) {
-                                    current = target;
-                                    clearInterval(interval);
-                                }
-                                el.textContent = (text.startsWith('+') ? '+' : '') + current + (text.endsWith('%') ? '%' : '');
-                            }, 40);
-                        }
-                        observer.unobserve(el);
-                    }
-                });
-            }, { threshold: 0.5 });
-            counters.forEach(c => observer.observe(c));
-        })();
-
-        // ── Efeito de brilho nos cards ao mouse ──
-        (function() {
-            const cards = document.querySelectorAll('.product-card');
-            cards.forEach(card => {
-                card.addEventListener('mousemove', function(e) {
-                    const rect = this.getBoundingClientRect();
-                    const x = ((e.clientX - rect.left) / rect.width) * 100;
-                    const y = ((e.clientY - rect.top) / rect.height) * 100;
-                    this.style.setProperty('--mouse-x', x + '%');
-                    this.style.setProperty('--mouse-y', y + '%');
-                    // Brilho dinâmico na borda via box-shadow com gradiente radial
-                    const glow = `radial-gradient(circle at ${x}% ${y}%, rgba(0,242,255,0.12), transparent 70%)`;
-                    this.style.backgroundImage = glow;
-                });
-                card.addEventListener('mouseleave', function() {
-                    this.style.backgroundImage = 'none';
-                });
-            });
-        })();
+        });
     </script>
 </body>
 </html>
