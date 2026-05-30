@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explosão do Game – Loja Cyberpunk</title>
+    <title>Explosão do Game - Loja de Tecnologia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         * {
@@ -13,421 +16,604 @@
         }
 
         body {
-            background: #0b0a0f;
-            color: #b3b0cc;
+            background-color: #0a0a0c;
+            color: #00f2ff;
             font-family: 'Share Tech Mono', monospace;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
         }
 
+        /* Grid ciano neon */
         body::before {
-            content: "";
+            content: '';
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 242, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.07) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Scanlines CRT */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(0, 255, 255, 0.03) 0px,
-                rgba(0, 255, 255, 0.03) 2px,
+                rgba(0, 0, 0, 0.3) 0px,
+                rgba(0, 0, 0, 0.3) 2px,
                 transparent 2px,
                 transparent 4px
             );
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 0, 255, 0.08), transparent 60%);
             pointer-events: none;
             z-index: 1;
         }
 
         .container {
             position: relative;
-            z-index: 10;
-            max-width: 1300px;
+            z-index: 2;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
         }
 
-        /* NAVBAR */
-        .navbar {
+        /* Header / Navegação */
+        header {
+            background: linear-gradient(135deg, #0d0d12 0%, #1a0a2e 100%);
+            border: 2px solid #00f2ff;
+            border-image: linear-gradient(135deg, #00f2ff, #b300ff) 1;
+            clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+            padding: 20px 30px;
+            margin-bottom: 40px;
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            border-bottom: 2px solid #00f0ff;
-            flex-wrap: wrap;
-            gap: 15px;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.15), 0 0 60px rgba(179, 0, 255, 0.08);
         }
 
-        .logo {
+        .logo h1 {
             font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
             font-weight: 900;
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #00f0ff, #ff00ff);
-            background-clip: text;
+            background: linear-gradient(135deg, #00f2ff, #b300ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
             letter-spacing: 3px;
         }
 
-        .nav-links {
+        .logo span {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            color: #b300ff;
+            display: block;
+            letter-spacing: 4px;
+            -webkit-text-fill-color: #b300ff;
+        }
+
+        .social-nav {
             display: flex;
-            gap: 30px;
-            list-style: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
-        }
-
-        .nav-links a {
-            color: #00f0ff;
-            text-decoration: none;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #ff00ff;
-            text-shadow: 0 0 10px #ff00ff;
-        }
-
-        /* SOCIAL ICONS (placeholder) */
-        .social-icons {
-            display: flex;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
         }
 
-        .social-icons a {
-            color: #b3b0cc;
-            font-size: 1.2rem;
+        .social-nav a {
+            color: #00f2ff;
             text-decoration: none;
-            transition: color 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            padding: 8px 18px;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .social-icons a:hover {
-            color: #00f0ff;
+        .social-nav a:hover {
+            background: rgba(0, 242, 255, 0.1);
+            border-color: #00f2ff;
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.3), inset 0 0 25px rgba(0, 242, 255, 0.05);
+            transform: translateY(-2px);
         }
 
-        /* FILTROS */
+        .social-nav a .icon {
+            font-size: 1.2rem;
+        }
+
+        /* Filtros */
         .filtros {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin: 30px 0 20px;
-            justify-content: center;
+            margin-bottom: 35px;
+            padding: 15px 20px;
+            background: rgba(10, 10, 12, 0.8);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+            backdrop-filter: blur(5px);
         }
 
-        .filtro-btn {
+        .filtros button {
             background: transparent;
-            border: 2px solid #00f0ff;
-            color: #00f0ff;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            color: #00f2ff;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 0.9rem;
-            padding: 8px 18px;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 0;
+            letter-spacing: 1.5px;
         }
 
-        .filtro-btn:hover,
-        .filtro-btn.ativo {
-            background: #00f0ff;
-            color: #0b0a0f;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.7);
+        .filtros button:hover,
+        .filtros button.ativo {
+            background: rgba(0, 242, 255, 0.15);
+            border-color: #00f2ff;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2), inset 0 0 20px rgba(0, 242, 255, 0.05);
+            color: #fff;
         }
 
-        /* GRID */
-        .grid-produtos {
+        .filtros button.ativo {
+            background: rgba(0, 242, 255, 0.2);
+            border-color: #b300ff;
+            box-shadow: 0 0 25px rgba(179, 0, 255, 0.25);
+        }
+
+        /* Grid de Produtos */
+        .produtos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
-            margin: 30px 0;
+            margin-bottom: 50px;
         }
 
-        .cartao {
-            background: rgba(20, 18, 30, 0.95);
-            border: 2px solid #2a2740;
-            padding: 20px 15px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+        .produto-card {
+            background: linear-gradient(160deg, #0d0d12 0%, #110a1a 100%);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            clip-path: polygon(20px 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
+            padding: 25px 20px 20px 20px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            backdrop-filter: blur(2px);
-            position: relative;
         }
 
-        .cartao:hover {
-            border-color: #ff00ff;
-            box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
+        .produto-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00f2ff, #b300ff, #00f2ff);
+            background-size: 200% 100%;
+            animation: neonBorderMove 3s linear infinite;
+            opacity: 0.6;
         }
 
-        .cartao .categoria-tag {
+        @keyframes neonBorderMove {
+            0% { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .produto-card:hover {
+            border-color: rgba(0, 242, 255, 0.5);
+            box-shadow: 0 0 35px rgba(0, 242, 255, 0.12), 0 0 70px rgba(179, 0, 255, 0.06);
+            transform: translateY(-5px);
+        }
+
+        .produto-card .categoria-tag {
+            font-size: 0.7rem;
+            color: #b300ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem;
-            color: #ff00ff;
-            border: 1px solid #ff00ff;
-            padding: 2px 10px;
-            margin-bottom: 12px;
-            display: inline-block;
-            letter-spacing: 2px;
+            opacity: 0.8;
         }
 
-        .cartao h3 {
+        .produto-card h3 {
             font-family: 'Orbitron', sans-serif;
             font-size: 1rem;
-            color: #00f0ff;
-            margin-bottom: 8px;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+            line-height: 1.4;
+            letter-spacing: 0.5px;
         }
 
-        .cartao .descricao {
-            font-size: 0.85rem;
-            color: #8f8bb3;
-            margin-bottom: 12px;
-            flex-grow: 1;
-        }
-
-        .cartao .preco {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            color: #ff00ff;
-            margin-bottom: 15px;
-            text-shadow: 0 0 8px rgba(255, 0, 255, 0.3);
-        }
-
-        .btn-comprar {
-            display: inline-block;
-            background: transparent;
-            border: 2px solid #00f0ff;
-            color: #00f0ff;
-            font-family: 'Orbitron', sans-serif;
+        .produto-card .detalhes {
             font-size: 0.8rem;
-            padding: 10px 20px;
-            text-decoration: none;
+            color: rgba(0, 242, 255, 0.6);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .produto-card .preco {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00f2ff;
+            margin-bottom: 18px;
+            text-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .produto-card .btn-comprar {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.15), rgba(179, 0, 255, 0.15));
+            border: 1px solid #00f2ff;
+            color: #00f2ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: all 0.3s;
-            width: 100%;
+            padding: 10px 20px;
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
             text-align: center;
+            margin-top: auto;
+            align-self: flex-start;
         }
 
-        .btn-comprar:hover {
-            background: #00f0ff;
-            color: #0b0a0f;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
+        .produto-card .btn-comprar:hover {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.3), rgba(179, 0, 255, 0.3));
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.25), 0 0 60px rgba(179, 0, 255, 0.1);
+            border-color: #b300ff;
+            color: #fff;
+            transform: scale(1.02);
         }
 
-        /* FOOTER */
+        .produto-card .btn-comprar::after {
+            content: ' ▶';
+            font-size: 0.7rem;
+        }
+
+        /* Footer */
         footer {
             margin-top: 50px;
-            border-top: 2px solid #00f0ff;
-            padding: 30px 0 20px;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(0, 242, 255, 0.15);
             text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .footer-links a {
-            color: #00f0ff;
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #ff00ff;
-        }
-
-        .footer-legal {
-            color: #6f6b8a;
             font-size: 0.75rem;
-            letter-spacing: 2px;
-            padding-top: 15px;
-            border-top: 1px solid #2a2740;
+            color: rgba(0, 242, 255, 0.4);
+            letter-spacing: 1px;
+            background: rgba(10, 10, 12, 0.5);
+            clip-path: polygon(30px 0, 100% 0, calc(100% - 30px) 100%, 0 100%);
+            border: 1px solid rgba(0, 242, 255, 0.08);
+            border-top: none;
         }
 
-        .footer-legal a {
-            color: #ff00ff;
-            text-decoration: none;
+        footer p {
+            margin-bottom: 6px;
+        }
+
+        footer .legal {
+            color: rgba(179, 0, 255, 0.4);
+            font-size: 0.65rem;
+        }
+
+        footer .legal strong {
+            color: rgba(179, 0, 255, 0.6);
         }
 
         /* Responsivo */
         @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            .nav-links {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+            .container { padding: 12px; }
+            header { flex-direction: column; gap: 15px; align-items: stretch; text-align: center; }
+            .logo h1 { font-size: 1.5rem; }
+            .social-nav { justify-content: center; flex-wrap: wrap; gap: 10px; }
+            .social-nav a { font-size: 0.7rem; padding: 6px 12px; }
+            .produtos-grid { grid-template-columns: 1fr; gap: 18px; }
+            .filtros { gap: 8px; padding: 12px 14px; }
+            .filtros button { font-size: 0.7rem; padding: 6px 14px; }
+            .produto-card { padding: 18px 14px; }
+            .produto-card h3 { font-size: 0.9rem; }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 { font-size: 1.2rem; }
+            .social-nav a { font-size: 0.6rem; padding: 4px 10px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- NAVBAR -->
-        <nav class="navbar">
-            <div class="logo">⚡EXPLOSÃO DO GAME</div>
-            <ul class="nav-links">
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Ofertas</a></li>
-                <li><a href="#">Contato</a></li>
-            </ul>
-            <div class="social-icons">
-                <a href="#" title="Instagram">📷</a>
-                <a href="#" title="YouTube">▶</a>
-                <a href="#" title="Twitter">🐦</a>
-                <a href="#" title="Twitch">📺</a>
-            </div>
-        </nav>
 
-        <!-- FILTROS -->
-        <div class="filtros" id="filtros">
-            <button class="filtro-btn ativo" data-categoria="todos">Todos</button>
-            <button class="filtro-btn" data-categoria="hd-externo">HDs Externos</button>
-            <button class="filtro-btn" data-categoria="ssd-sata">SSDs SATA</button>
-            <button class="filtro-btn" data-categoria="ssd-nvme">SSDs NVMe</button>
-            <button class="filtro-btn" data-categoria="consoles">Consoles e Acessórios</button>
-            <button class="filtro-btn" data-categoria="homebrew">Homebrew/Flashcarts</button>
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <h1>⚡ EXPLOSÃO DO GAME</h1>
+            <span>// TECNOLOGIA & GAMING</span>
         </div>
+        <div class="social-nav">
+            <a href="https://youtube.com" target="_blank" rel="noopener"><span class="icon">▶</span> YouTube</a>
+            <a href="https://x.com" target="_blank" rel="noopener"><span class="icon">✕</span> X</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener"><span class="icon">◉</span> Instagram</a>
+        </div>
+    </header>
 
-        <!-- GRID DE PRODUTOS -->
-        <div class="grid-produtos" id="grid-produtos"></div>
-
-        <!-- FOOTER -->
-        <footer>
-            <div class="footer-links">
-                <a href="#" title="Instagram">📷 Instagram</a>
-                <a href="#" title="YouTube">▶ YouTube</a>
-                <a href="#" title="Twitter">🐦 Twitter</a>
-                <a href="#" title="Twitch">📺 Twitch</a>
-                <a href="#" title="Discord">💬 Discord</a>
-            </div>
-            <div class="footer-legal">
-                Como associado Amazon, eu recebo por compras qualificadas.<br>
-                © 2025 Explosão do Game – Todos os direitos reservados.
-            </div>
-        </footer>
+    <!-- FILTROS -->
+    <div class="filtros" id="filtros">
+        <button class="ativo" data-categoria="todos">Todos</button>
+        <button data-categoria="hd-externo">HDs Externos</button>
+        <button data-categoria="ssd-sata">SSDs SATA</button>
+        <button data-categoria="ssd-nvme">SSDs NVMe</button>
+        <button data-categoria="console">Consoles/Acessórios</button>
+        <button data-categoria="homebrew">Homebrew/Essenciais</button>
     </div>
 
-    <script>
-        (function() {
-            // ---------- BASE DE DADOS DE PRODUTOS ----------
-            const produtos = [
-                // HDs Externos
-                { nome: "Seagate Expansion 1TB", categoria: "hd-externo", asin: "B07D3R4H7Z", preco: "R$ 299,90" },
-                { nome: "Seagate Expansion 2TB", categoria: "hd-externo", asin: "B07D3R5K9G", preco: "R$ 439,90" },
-                { nome: "Seagate Expansion 4TB", categoria: "hd-externo", asin: "B07D3R6L8X", preco: "R$ 589,90" },
-                { nome: "WD Elements 2TB", categoria: "hd-externo", asin: "B07YFJ6G8W", preco: "R$ 429,90" },
-                { nome: "WD Elements 4TB", categoria: "hd-externo", asin: "B07YFJ9K3L", preco: "R$ 599,90" },
-                { nome: "Toshiba Canvio Basics 1TB", categoria: "hd-externo", asin: "B07D3R4H7Z", preco: "R$ 279,90" },
-                // SSDs SATA
-                { nome: "Kingston A400 480GB", categoria: "ssd-sata", asin: "B07D3R4H7Z", preco: "R$ 259,90" },
-                { nome: "Kingston A400 960GB", categoria: "ssd-sata", asin: "B07D3R5K9G", preco: "R$ 439,90" },
-                { nome: "Crucial BX500 480GB", categoria: "ssd-sata", asin: "B07YFJ6G8W", preco: "R$ 269,90" },
-                { nome: "Crucial BX500 1TB", categoria: "ssd-sata", asin: "B07YFJ9K3L", preco: "R$ 459,90" },
-                { nome: "SanDisk SSD Plus 1TB", categoria: "ssd-sata", asin: "B07D3R6L8X", preco: "R$ 479,90" },
-                // SSDs NVMe (foco PS5 com heatsink)
-                { nome: "Samsung 980 Pro 1TB (c/ Heatsink)", categoria: "ssd-nvme", asin: "B08GSXPJLG", preco: "R$ 799,90" },
-                { nome: "Samsung 980 Pro 2TB (c/ Heatsink)", categoria: "ssd-nvme", asin: "B08GSY9W1H", preco: "R$ 1.399,90" },
-                { nome: "WD_BLACK SN850X 1TB", categoria: "ssd-nvme", asin: "B09JLSG9G3", preco: "R$ 749,90" },
-                { nome: "WD_BLACK SN850X 2TB", categoria: "ssd-nvme", asin: "B09JLT3G9J", preco: "R$ 1.299,90" },
-                { nome: "Kingston FURY Renegade 1TB", categoria: "ssd-nvme", asin: "B09H2WZ9P3", preco: "R$ 699,90" },
-                { nome: "Crucial P5 Plus 1TB", categoria: "ssd-nvme", asin: "B09JLRC2DK", preco: "R$ 679,90" },
-                // Consoles e Acessórios
-                { nome: "PlayStation 5 (Versão Disco)", categoria: "consoles", asin: "B08FC5L3GK", preco: "R$ 3.999,90" },
-                { nome: "Controle DualSense Branco", categoria: "consoles", asin: "B08FC5L3GK", preco: "R$ 399,90" },
-                { nome: "Controle DualSense Preto", categoria: "consoles", asin: "B08FC6HZ5D", preco: "R$ 399,90" },
-                { nome: "Controle DualSense Rosa", categoria: "consoles", asin: "B08FC7JZ6F", preco: "R$ 419,90" },
-                { nome: "Nintendo Switch OLED", categoria: "consoles", asin: "B09LJ7Z9P3", preco: "R$ 2.499,90" },
-                { nome: "Controle 8BitDo Ultimate", categoria: "consoles", asin: "B09JLSG9G3", preco: "R$ 299,90" },
-                // Homebrew/Flashcarts
-                { nome: "MicroSD SanDisk Extreme 64GB", categoria: "homebrew", asin: "B07YFJ6G8W", preco: "R$ 79,90" },
-                { nome: "MicroSD SanDisk Extreme 128GB", categoria: "homebrew", asin: "B07YFJ9K3L", preco: "R$ 129,90" },
-                { nome: "MicroSD SanDisk Extreme 256GB", categoria: "homebrew", asin: "B07D3R6L8X", preco: "R$ 229,90" },
-                { nome: "Adaptador HDMI para Retro", categoria: "homebrew", asin: "B09H2WZ9P3", preco: "R$ 89,90" }
-            ];
+    <!-- PRODUTOS GRID -->
+    <div class="produtos-grid" id="produtos-grid"></div>
 
-            // Função para gerar link de afiliado
-            const gerarLink = (asin) => `https://www.amazon.com.br/dp/${asin}/?tag=explosaodogam-20`;
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 Explosão do Game — Todos os direitos reservados.</p>
+        <p class="legal">
+            <strong>Aviso de Afiliado:</strong> Esta loja utiliza links de afiliado da Amazon. 
+            Ao comprar através dos nossos links, você ajuda a manter o canal sem custo adicional para você. 
+            <strong>StoreID: explosaodogam-20</strong>
+        </p>
+    </footer>
 
-            // Renderizar produtos
-            const grid = document.getElementById('grid-produtos');
-            const filtroBotoes = document.querySelectorAll('.filtro-btn');
+</div>
 
-            function renderizar(categoriaFiltro = 'todos') {
-                grid.innerHTML = '';
-                const filtrados = categoriaFiltro === 'todos' 
-                    ? produtos 
-                    : produtos.filter(p => p.categoria === categoriaFiltro);
+<script>
+    // ===== BANCO DE PRODUTOS =====
+    const produtos = [
+        // --- HDs Externos ---
+        {
+            id: 1,
+            nome: 'Seagate Expansion 1TB',
+            categoria: 'hd-externo',
+            categoriaLabel: 'HD Externo',
+            detalhes: 'USB 3.0, Portátil, Preto',
+            asin: 'B07D3R4H7Z',
+        },
+        {
+            id: 2,
+            nome: 'Seagate Expansion 2TB',
+            categoria: 'hd-externo',
+            categoriaLabel: 'HD Externo',
+            detalhes: 'USB 3.0, Portátil, Preto',
+            asin: 'B07D3R5K9G',
+        },
+        {
+            id: 3,
+            nome: 'Seagate Expansion 4TB',
+            categoria: 'hd-externo',
+            categoriaLabel: 'HD Externo',
+            detalhes: 'USB 3.0, Portátil, Preto',
+            asin: 'B07D3R6L8X',
+        },
+        {
+            id: 4,
+            nome: 'WD Elements 2TB',
+            categoria: 'hd-externo',
+            categoriaLabel: 'HD Externo',
+            detalhes: 'USB 3.0, Portátil, Preto',
+            asin: 'B06W55K9N6',
+        },
+        {
+            id: 5,
+            nome: 'WD Elements 4TB',
+            categoria: 'hd-externo',
+            categoriaLabel: 'HD Externo',
+            detalhes: 'USB 3.0, Portátil, Preto',
+            asin: 'B0713WPGLL',
+        },
+        // --- SSDs SATA ---
+        {
+            id: 6,
+            nome: 'Kingston A400 480GB',
+            categoria: 'ssd-sata',
+            categoriaLabel: 'SSD SATA',
+            detalhes: 'SATA III, 2.5"',
+            asin: 'B01N0TQPQB',
+        },
+        {
+            id: 7,
+            nome: 'Kingston A400 960GB',
+            categoria: 'ssd-sata',
+            categoriaLabel: 'SSD SATA',
+            detalhes: 'SATA III, 2.5"',
+            asin: 'B079XC5PVV',
+        },
+        {
+            id: 8,
+            nome: 'Crucial BX500 480GB',
+            categoria: 'ssd-sata',
+            categoriaLabel: 'SSD SATA',
+            detalhes: 'SATA III, 2.5"',
+            asin: 'B07G3KGYZQ',
+        },
+        {
+            id: 9,
+            nome: 'Crucial BX500 1TB',
+            categoria: 'ssd-sata',
+            categoriaLabel: 'SSD SATA',
+            detalhes: 'SATA III, 2.5"',
+            asin: 'B07YD5LKHG',
+        },
+        // --- SSDs NVMe (c/ Heatsink) ---
+        {
+            id: 10,
+            nome: 'Samsung 980 Pro 1TB c/ Heatsink',
+            categoria: 'ssd-nvme',
+            categoriaLabel: 'SSD NVMe',
+            detalhes: 'PCIe Gen4, NVMe, Heatsink integrado',
+            asin: 'B09JHL33X7',
+        },
+        {
+            id: 11,
+            nome: 'Samsung 980 Pro 2TB c/ Heatsink',
+            categoria: 'ssd-nvme',
+            categoriaLabel: 'SSD NVMe',
+            detalhes: 'PCIe Gen4, NVMe, Heatsink integrado',
+            asin: 'B09JHKSNNG',
+        },
+        {
+            id: 12,
+            nome: 'WD_BLACK SN850X 1TB c/ Heatsink',
+            categoria: 'ssd-nvme',
+            categoriaLabel: 'SSD NVMe',
+            detalhes: 'PCIe Gen4, NVMe, Heatsink integrado',
+            asin: 'B0B7CPSN2K',
+        },
+        {
+            id: 13,
+            nome: 'WD_BLACK SN850X 2TB c/ Heatsink',
+            categoria: 'ssd-nvme',
+            categoriaLabel: 'SSD NVMe',
+            detalhes: 'PCIe Gen4, NVMe, Heatsink integrado',
+            asin: 'B0B7CKVCCV',
+        },
+        // --- Consoles / Acessórios ---
+        {
+            id: 14,
+            nome: 'PlayStation 5 Slim',
+            categoria: 'console',
+            categoriaLabel: 'Console',
+            detalhes: 'Edição Padrão, Branca',
+            asin: 'B0CL61F39H',
+        },
+        {
+            id: 15,
+            nome: 'Controle DualSense Branco',
+            categoria: 'console',
+            categoriaLabel: 'Acessório',
+            detalhes: 'Sem fio, PS5',
+            asin: 'B08FC5L3GK',
+        },
+        {
+            id: 16,
+            nome: 'Nintendo Switch OLED',
+            categoria: 'console',
+            categoriaLabel: 'Console',
+            detalhes: 'Modelo OLED, Branco/Neon',
+            asin: 'B09H97S6GS',
+        },
+        {
+            id: 17,
+            nome: 'Controle 8BitDo Ultimate',
+            categoria: 'console',
+            categoriaLabel: 'Acessório',
+            detalhes: 'Sem fio, Bluetooth, Preto',
+            asin: 'B0B9BDMWWN',
+        },
+        // --- Homebrew / Essenciais ---
+        {
+            id: 18,
+            nome: 'MicroSD SanDisk Extreme 128GB',
+            categoria: 'homebrew',
+            categoriaLabel: 'MicroSD',
+            detalhes: 'Classe 10, U3, V30',
+            asin: 'B07FCMKK5X',
+        },
+        {
+            id: 19,
+            nome: 'MicroSD SanDisk Extreme 256GB',
+            categoria: 'homebrew',
+            categoriaLabel: 'MicroSD',
+            detalhes: 'Classe 10, U3, V30',
+            asin: 'B07FCR3316',
+        },
+        {
+            id: 20,
+            nome: 'Adaptador HDMI Bitfunx para Retro',
+            categoria: 'homebrew',
+            categoriaLabel: 'Adaptador',
+            detalhes: 'Conversor HDMI para consoles clássicos',
+            asin: 'B0819X8V29',
+        },
+    ];
 
-                if (filtrados.length === 0) {
-                    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#6f6b8a;">Nenhum produto encontrado.</div>`;
-                    return;
-                }
+    // ===== RENDERIZAR PRODUTOS =====
+    const grid = document.getElementById('produtos-grid');
+    const botoesFiltro = document.querySelectorAll('.filtros button');
+    let categoriaAtiva = 'todos';
 
-                filtrados.forEach(prod => {
-                    const card = document.createElement('div');
-                    card.className = 'cartao';
-                    card.dataset.categoria = prod.categoria;
+    function gerarPreco() {
+        // Gera um preço fictício realista para exibição (variado)
+        const valores = [189.90, 219.90, 279.90, 349.90, 429.90, 519.90, 699.90, 849.90, 1299.90, 1799.90, 2499.90, 3599.90, 4299.90];
+        const idx = Math.floor(Math.random() * valores.length);
+        return valores[idx];
+    }
 
-                    let nomeCategoria = '';
-                    switch(prod.categoria) {
-                        case 'hd-externo': nomeCategoria = 'HD Externo'; break;
-                        case 'ssd-sata': nomeCategoria = 'SSD SATA'; break;
-                        case 'ssd-nvme': nomeCategoria = 'SSD NVMe'; break;
-                        case 'consoles': nomeCategoria = 'Console/Acessório'; break;
-                        case 'homebrew': nomeCategoria = 'Homebrew'; break;
-                        default: nomeCategoria = prod.categoria;
-                    }
+    function montarLinkAmazon(asin) {
+        return `https://www.amazon.com.br/dp/${asin}/?tag=explosaodogam-20`;
+    }
 
-                    card.innerHTML = `
-                        <span class="categoria-tag">${nomeCategoria}</span>
-                        <h3>${prod.nome}</h3>
-                        <div class="descricao">Produto original lacrado. Garantia do fabricante.</div>
-                        <div class="preco">${prod.preco}</div>
-                        <a href="${gerarLink(prod.asin)}" target="_blank" rel="nofollow sponsored" class="btn-comprar">Comprar na Amazon</a>
-                    `;
-                    grid.appendChild(card);
-                });
-            }
+    function renderizarProdutos(categoria) {
+        const filtrados = categoria === 'todos'
+            ? produtos
+            : produtos.filter(p => p.categoria === categoria);
 
-            // Inicializar
-            renderizar('todos');
+        if (filtrados.length === 0) {
+            grid.innerHTML = `
+                <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:rgba(0,242,255,0.3); font-size:1.2rem; letter-spacing:2px;">
+                    ⚡ NENHUM PRODUTO ENCONTRADO ⚡
+                </div>
+            `;
+            return;
+        }
 
-            // Eventos de filtro
-            filtroBotoes.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filtroBotoes.forEach(b => b.classList.remove('ativo'));
-                    this.classList.add('ativo');
-                    const cat = this.dataset.categoria;
-                    renderizar(cat);
-                });
-            });
-        })();
-    </script>
+        let html = '';
+        filtrados.forEach(prod => {
+            const preco = gerarPreco();
+            const precoFormatado = preco.toFixed(2).replace('.', ',');
+            html += `
+                <div class="produto-card" data-categoria="${prod.categoria}">
+                    <div class="categoria-tag">// ${prod.categoriaLabel}</div>
+                    <h3>${prod.nome}</h3>
+                    <div class="detalhes">${prod.detalhes}</div>
+                    <div class="preco">R$ ${precoFormatado}</div>
+                    <a class="btn-comprar" href="${montarLinkAmazon(prod.asin)}" target="_blank" rel="noopener noreferrer">
+                        COMPRAR
+                    </a>
+                </div>
+            `;
+        });
+
+        grid.innerHTML = html;
+    }
+
+    // ===== FILTROS =====
+    botoesFiltro.forEach(btn => {
+        btn.addEventListener('click', function() {
+            botoesFiltro.forEach(b => b.classList.remove('ativo'));
+            this.classList.add('ativo');
+            categoriaAtiva = this.getAttribute('data-categoria');
+            renderizarProdutos(categoriaAtiva);
+        });
+    });
+
+    // ===== INICIALIZAR =====
+    renderizarProdutos('todos');
+</script>
+
 </body>
 </html>
